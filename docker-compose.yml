@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+  mongo:
+    image: mongo
+
+  parse:
+    build: ./backend/
+    image: "lightyear/affinity-backend:latest"
+    command: "--appId APPLICATION_ID --masterKey MASTER_KEY --databaseURI mongodb://mongo/dev --cloud /parse-server/cloud/main.js /parse-server/custom-config.json"
+    volumes:
+      - ./backend/cloud:/parse-server/cloud
+      - ./backend/parse-config.json:/parse-server/custom-config.json
+    ports:
+      - 1337:1337
+    links:
+      - mongo
+  dashboard:
+    image: parseplatform/parse-dashboard
+    command: --dev --appId APPLICATION_ID --masterKey MASTER_KEY --serverURL "${VUE_APP_PARSE_URL}" --appName affinity
+    ports:
+      - 4040:4040
+    links:
+      - parse
