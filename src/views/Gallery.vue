@@ -13,7 +13,7 @@
       <ion-grid>
         <ion-row>
           <ion-col
-            size="4"
+            size="4" size-lg="2" size-md="3"
             v-for="(item, index) in filterPicture"
             :key="index"
             class="custom-card"
@@ -81,25 +81,24 @@ export default defineComponent({
           }
         }
       });
-      return pictureList;
-      // if (this.searchValue.length!==0 && this.searchValue!=='All' && this.searchValue!=='setting') {
-      //     const v = this.searchValue;
-      //     const foundIcons: any[] = [];
+      if (this.searchValue.length!==0 && this.searchValue!=='All' && this.searchValue!=='setting') {
+        const v = this.searchValue;
+          const foundIcons: any[] = [];
 
-      //     pictureList.forEach((g: any) => {
-      //         if(g.team.name.toLowerCase().indexOf(v.toLowerCase()) > -1){
-      //           foundIcons.push(g)
-      //         }
-      //     })
-      //     console.log(foundIcons);
+          pictureList.forEach((g: any) => {
+            if(g.team.name.toLowerCase().indexOf(v.toLowerCase()) > -1){
+              foundIcons.push(g)
+              }
+          })
+          console.log(foundIcons);
 
-      //     return foundIcons
-      // }
-      // else{
-      //   console.log("pictureList",pictureList);
+          return foundIcons
+      }
+      else{
+        console.log("pictureList",pictureList);
 
-      //     return pictureList;
-      // }
+          return pictureList;
+      }
     },
   },
 
@@ -116,20 +115,18 @@ export default defineComponent({
       });
     },
     async viewPicture(item: any, selectedImg: any) {
-      const pictureList: any[] = [];
+      const tempData: any[] = [];
       this.elem.find((x: any) => {
         if (x.objects[0]) {
-          pictureList.push(x.objects[0]);
+          tempData.push(x);
         }
       });
-      // const tempimg = this.temppictureArray;
-      console.log(pictureList);
       
       const popover = await modalController.create({
         component: PictureView,
         cssClass: "modalCss",
         componentProps: {
-          imgDetails: pictureList,
+          imgDetails: tempData.slice().reverse(),
           zIndex: selectedImg,
         },
       });
@@ -163,7 +160,7 @@ export default defineComponent({
   justify-content: center;
   display: flex;
   width: 100%;
-  height: 100px;
+  height: 130px;
   padding: 0;
   margin-bottom: 8px;
 }

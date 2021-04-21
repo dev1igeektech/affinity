@@ -17,7 +17,7 @@
         :itemId="item"
         :key="item"
         :z-index="index"
-        :indexValue="zIndex"
+        :indexValue="currentIndex"
         :itemData="imgDetails"
       />
     </div>
@@ -62,11 +62,12 @@ export default defineComponent({
     IonContent,
   },
 
-  setup() {
+  setup(props: any) {
     const store = useStore();
     return {
       closeIcon,
       store,
+      currentIndex: props.zIndex
     };
   },
 

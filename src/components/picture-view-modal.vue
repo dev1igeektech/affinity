@@ -9,7 +9,8 @@
       <ion-icon :icon="likeIcon" />
     </span>
 
-    <ion-img class="item-img" :src="imageUrl" />
+    <!-- <ion-img class="item-img" :id="imageUrl" v-if="imageUrl" :src="imageUrl" /> -->
+    <img class="item-img" :id="imageUrl" v-if="imageUrl" :src="imageUrl" />
 
     <div class="menu">
       <router-link :to="teamLink">
@@ -70,12 +71,12 @@ export default defineComponent({
     },
     itemData: {
       type: Array,
-    },
+    }
   },
   components: {
     IonLabel,
     IonIcon,
-    IonImg,
+    // IonImg,
     Avatar,
     ShareButton,
     LikeButton,
@@ -83,7 +84,7 @@ export default defineComponent({
   setup(props: { itemId: any; itemData?: any, indexValue?: any }) {
     const store = useStore();
     console.log(props);
-
+    console.log('uri is ', props.itemId.objects[0].file.url);
     return {
       item: props.itemId,
       allData: props.itemData,
@@ -139,8 +140,7 @@ export default defineComponent({
       return this.item?.toPointer();
     },
     image(): Model | null {
-      // return this.item.objects[0];
-      return this.allData[this.indexOfImg].objects[0];
+      return this.item.objects[0];
     },
     imageUrl(): string | null {
       return this.image?.file.url;
