@@ -68,6 +68,9 @@ export default defineComponent({
     indexValue: {
       type: Number,
     },
+    itemData: {
+      type: Array,
+    },
   },
   components: {
     IonLabel,
@@ -77,11 +80,14 @@ export default defineComponent({
     ShareButton,
     LikeButton,
   },
-  setup(props: { itemId: any }) {
+  setup(props: { itemId: any; itemData?: any, indexValue?: any }) {
     const store = useStore();
+    console.log(props);
 
     return {
       item: props.itemId,
+      allData: props.itemData,
+      indexOfImg: props.indexValue,
       objs: computed(() => store.getters.objectsMap),
       store,
       commentsIcon,
@@ -133,7 +139,8 @@ export default defineComponent({
       return this.item?.toPointer();
     },
     image(): Model | null {
-      return this.item.objects[0];
+      // return this.item.objects[0];
+      return this.allData[this.indexOfImg].objects[0];
     },
     imageUrl(): string | null {
       return this.image?.file.url;

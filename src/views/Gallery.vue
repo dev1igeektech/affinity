@@ -122,12 +122,14 @@ export default defineComponent({
           pictureList.push(x.objects[0]);
         }
       });
-      const tempimg = this.temppictureArray;
+      // const tempimg = this.temppictureArray;
+      console.log(pictureList);
+      
       const popover = await modalController.create({
         component: PictureView,
         cssClass: "modalCss",
         componentProps: {
-          imgDetails: tempimg.slice().reverse(),
+          imgDetails: pictureList,
           zIndex: selectedImg,
         },
       });
@@ -163,7 +165,7 @@ export default defineComponent({
   width: 100%;
   height: 100px;
   padding: 0;
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 .grid-img {
   width: 100%;
